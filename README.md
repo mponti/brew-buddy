@@ -11,6 +11,7 @@ This application automates the process of tracking green coffee availability fro
 * **Automatic Filtering:** Pre-filters results to exclude blends, roasted coffee, and samplers, ensuring only single-origin green coffees are stored.
 * **Historical Tracking:** Uses an "UPSERT" strategy with "soft deletes." Items currently on the site are marked active; items removed are marked inactive but retained in the database for historical analysis.
 * **Data Enrichment:** Captures detailed metadata including origin, price, score, tasting notes, and full descriptions.
+* **AI-Powered Semantic Search:** Uses Google's Gemini embeddings to allow for "vibe-based" searching of coffee profiles (e.g., finding coffees that match descriptions like "funky and bright" rather than just exact keywords).
 
 ## Why It's Useful
 
@@ -73,6 +74,7 @@ The application is configured via a combination of environment variables (for in
 | :--- | :--- | :--- |
 | `DB_PATH` | Path within the container to save the SQLite DB. | `/data/coffee.db` |
 | `CONFIG_PATH` | Path within the container to the YAML config file. | `/app/config.yaml` |
+| `GEMINI_API_KEY` | (Optional) Google Gemini API key for semantic search. | `AIzaSy...` |
 
 `config.yaml`
 
@@ -120,15 +122,65 @@ GROUP BY origin
 ORDER BY count DESC;
 ```
 
+## AI Semantic Search 🤖
+
+Brew Buddy goes beyond simple keyword matching by using AI to understand the flavor profile you're looking for.
+
+### Prerequisites
+
+You need a standard (free tier is fine) API key from Google AI Studio. Export it in your terminal before running these tools:
+
+```bash
+export GEMINI_API_KEY="your-key-here"
+```
+
+### Generate Embeddings
+
+After running the scraper, you need to generate vectors for the new coffee descriptions. The `embedder.go` script handles this. It only processes coffees that haven't been embedded yet.
+
+```bash
+go run embedder.go
+```
+
+### Run a Search
+
+Use the `search.go` tool to find coffees based on a natural language description of the vibe or flavor you want.
+
+```bash
+go run search.go "I want something funky, bright, and fruity"
+# OR
+go run search.go "classic comforting chocolate and nut flavors"
+```
+
+You'll get the top 5 matches returned with match scores to review.
+
+### Search History
+
+The tool caches your search queries locally so re-running the same search is instant and doesn't use API credits.
+
+* **View History:** See all your past searches.
+  ```bash
+  go run search.go history
+  ```
+* **Clear History:** Remove a specific query or wipe the entire cache.
+  ```bash
+  # Remove specific entry (case-insensitive match)
+  go run search.go clear "funky and fruity"
+
+  # Wipe everything
+  go run search.go clear all
+  ```
+
 ## Roadmap
 
 * [x] Core scraper with headless browser.
 * [x] SQLite storage with history tracking (soft deletes).
 * [x] Filtering for blends/roasted coffee via deny list.
 * [x] External YAML configuration.
-* [ ] **AI-Powered Semantic Search:** Integrate LLM embeddings to allow for "vibe-based" searching of coffee profiles (e.g., "Find me something funky and bright").
+* [x] **AI-Powered Semantic Search:** Integrate LLM embeddings to allow for "vibe-based" searching of coffee profiles (e.g., "Find me something funky and bright").
 * [ ] Personal tasting notes table.
 * [ ] UI for viewing and filtering coffees.
+* [ ] Leverage semantic search to build a coffee blend tool.
 
 ## Help & Support
 

@@ -176,7 +176,7 @@ func loadSiteConfig(path string) (*SiteConfig, error) {
 // --- DATABASE FUNCTIONS ---
 
 func initDB(dbPath string) (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := sql.Open("sqlite3", dbPath+"?_busy_timeout=5000&_journal_mode=WAL")
 	if err != nil {
 		return nil, err
 	}
