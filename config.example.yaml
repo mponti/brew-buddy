@@ -1,0 +1,18 @@
+category_url: ""
+selectors:
+  cookie_button: ""
+  newsletter_popup: ""
+  product_list_wait: ""
+  product_row: ""
+  link: ""
+  price: ""
+  origin: ""
+  stock_button: ""
+  stock_coming_soon: ""
+  description: ""
+  description_is_next_row: true
+disallowed_keywords:
+  - "blend"
+  - "roasted"
+  - "set"
+  - "subscription"

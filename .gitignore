@@ -1,0 +1,8 @@
+# Binaries
+brew-buddy
+
+# Local data directory for SQLite DB and screenshots
+local-data/**
+
+# Configuration files (keep your real target private)
+config.yaml
