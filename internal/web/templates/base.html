@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Buddy ☕</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        /* Minimal custom overrides */
+        :root { --primary: #6f4e37; } /* Coffee brown primary color */
+        .stock-in { color: #2ecc71; font-weight: bold; }
+        .stock-out { color: #e74c3c; }
+        .coffee-card { padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--muted-border-color); border-radius: var(--border-radius); }
+        .similarity-score { float: right; font-size: 0.9em; color: var(--primary); }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" style="color: var(--contrast);">Brew Buddy ☕</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/">Inventory</a></li>
+            </ul>
+        </nav>
+
+        <form action="/search" method="GET" role="search">
+            <input type="search" name="q" placeholder="Describe your perfect coffee vibe (e.g., 'funky and fruity')..." required>
+            <input type="submit" value="AI Search">
+        </form>
+
+        {{block "content" .}}
+            <section>
+                <h2>Welcome to Brew Buddy</h2>
+                <p>Select an option from the menu to get started.</p>
+            </section>
+        {{end}}
+
+    </main>
+</body>
+</html>

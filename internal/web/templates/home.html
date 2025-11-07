@@ -1,0 +1,37 @@
+{{define "content"}}
+<section>
+    <h2>Current Inventory</h2>
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Origin</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .}}
+                <tr>
+                    <td><a href="{{.URL}}" target="_blank">{{.Name}}</a></td>
+                    <td>{{.Origin}}</td>
+                    <td>${{printf "%.2f" .Price}}</td>
+                    <td>
+                        {{if eq .StockStatus "In Stock"}}
+                            <span class="stock-in">{{.StockStatus}}</span>
+                        {{else}}
+                            <span class="stock-out">{{.StockStatus}}</span>
+                        {{end}}
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="4">No active coffees found. Try running the scraper!</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </figure>
+</section>
+{{end}}

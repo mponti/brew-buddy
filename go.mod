@@ -1,4 +1,4 @@
-module mspro-labs/greens-library
+module mspro-labs/brew-buddy
 
 go 1.25.1
 
@@ -8,6 +8,7 @@ require (
 	github.com/go-rod/stealth v0.4.9
 	github.com/google/generative-ai-go v0.20.1
 	github.com/mattn/go-sqlite3 v1.14.32
+	github.com/spf13/cobra v1.10.1
 	google.golang.org/api v0.255.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -27,6 +28,8 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.6 // indirect
 	github.com/googleapis/gax-go/v2 v2.15.0 // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/ysmood/fetchup v0.2.3 // indirect
 	github.com/ysmood/goob v0.4.0 // indirect
 	github.com/ysmood/got v0.40.0 // indirect

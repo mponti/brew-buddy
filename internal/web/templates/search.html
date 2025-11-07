@@ -1,0 +1,21 @@
+{{define "content"}}
+<section>
+    <hgroup>
+        <h2>Search Results</h2>
+        <h3>For: "{{.Query}}"</h3>
+    </hgroup>
+
+    {{range .Results}}
+    <article class="coffee-card">
+        <header>
+            <strong><a href="{{.Item.URL}}" target="_blank">{{.Item.Name}}</a></strong>
+            <span class="similarity-score">{{printf "%.0f" (mul .Score 100)}}% Match</span>
+        </header>
+        <small><strong>Origin:</strong> {{.Item.Origin}}</small>
+        <p>{{.Item.Description}}</p>
+    </article>
+    {{else}}
+    <p>No good matches found. Try a different description!</p>
+    {{end}}
+</section>
+{{end}}
