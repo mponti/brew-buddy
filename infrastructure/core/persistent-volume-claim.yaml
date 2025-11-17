@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: brew-buddy-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # This is standard for a single DB file
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: local-storage
+  selector:
+    matchLabels:
+      type: "pny-usb-8"

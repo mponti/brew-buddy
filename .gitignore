@@ -6,3 +6,5 @@ local-data/**
 
 # Configuration files (keep your real target private)
 config.yaml
+
+**/.env.secrets

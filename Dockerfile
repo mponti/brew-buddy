@@ -17,7 +17,7 @@ COPY . .
 # Build the Go binary
 # CGO_ENABLED=1 is required for go-sqlite3
 # -ldflags="-w -s" strips debug symbols, making the binary smaller
-RUN CGO_ENABLED=1 go build -ldflags="-w -s -extldflags '-static'" -tags "sqlite_static" -o /app/scraper main.go
+RUN CGO_ENABLED=1 go build -ldflags="-w -s -extldflags '-static'" -tags "sqlite_static" -o /app/brew-buddy main.go
 
 # --- Stage 2: Final Image ---
 # Use the official rod image which includes a browser
@@ -26,12 +26,12 @@ FROM ghcr.io/go-rod/rod
 WORKDIR /app
 
 # Copy the compiled binary from the builder stage
-COPY --from=builder /app/scraper /app/scraper
+COPY --from=builder /app/brew-buddy /app/brew-buddy
 
 # Create a non-root user and group with ID 1001
 # This matches the runAsUser in the Kubernetes spec
-RUN addgroup --gid 1001 scraper && \
-    adduser --uid 1001 --gid 1001 --disabled-password scraper
+RUN addgroup --gid 1001 barista && \
+    adduser --uid 1001 --gid 1001 --disabled-password barista
 
 # Create the /data directory for the SQLite database
 # and set ownership to our new non-root user
@@ -42,4 +42,4 @@ RUN mkdir /data && \
 USER 1001
 
 # Set the entrypoint to our compiled binary
-ENTRYPOINT ["/app/scraper"]
+ENTRYPOINT ["/app/brew-buddy"]

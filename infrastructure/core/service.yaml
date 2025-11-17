@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: brew-buddy-web-svc
+spec:
+  type: NodePort # Use LoadBalancer if on a cloud provider
+  selector:
+    app: brew-buddy-web
+  ports:
+  - protocol: TCP
+    port: 80       # Port inside the cluster
+    targetPort: 8080 # Port on the container
+    nodePort: 30808

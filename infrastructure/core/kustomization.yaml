@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yaml
+- service.yaml
+- cronjob.yaml
+- persistent-volume.yaml
+- persistent-volume-claim.yaml
+
+namespace: default
+
+
+configMapGenerator:
+- behavior: create
+  files:
+  - ./environment/config.yaml
+  name: brew-buddy-config
+  namespace: default
+
+secretGenerator:
+- envs:
+  - ./environment/.env.secrets
+  name: brew-buddy-secret
+  namespace: default
+  type: Opaque
+labels:
+- includeSelectors: true
+  pairs:
+    deployment: brew-buddy

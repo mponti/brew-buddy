@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brew-buddy-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: brew-buddy-web
+  template:
+    metadata:
+      labels:
+        app: brew-buddy-web
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        seccompProfile:
+          type: "RuntimeDefault"
+      #
+      # Used to chown the persistent volume, comment out the runAs lines above as well
+      # Needed because fsGroup does not work properly on Talos with local-volume
+      #
+      #initContainers:
+      #- name: volume-permission-fix
+      #  image: alpine:latest
+      #  command: ["sh", "-c", "chown 1001:1001 /data"]
+      #  volumeMounts:
+      #  - name: data-storage
+      #    mountPath: /data
+      containers:
+      - name: web-server
+        image: local-registry.io/brew-buddy:latest
+        command: ["/app/brew-buddy"]
+        args: ["serve"]
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_PATH
+          value: /data/coffee.db
+        - name: CONFIG_PATH
+          value: /app/config.yaml
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: brew-buddy-secret
+              key: GEMINI_API_KEY
+        volumeMounts:
+        - name: data-storage
+          mountPath: /data
+        - name: config-volume
+          mountPath: /app/config.yaml
+          subPath: config.yaml # Mounts the file, not the dir
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+      volumes:
+      - name: data-storage
+        persistentVolumeClaim:
+          claimName: brew-buddy-data-pvc
+      - name: config-volume
+        configMap:
+          name: brew-buddy-config
