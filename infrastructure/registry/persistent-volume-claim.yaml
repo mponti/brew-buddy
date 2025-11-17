@@ -1,15 +1,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: brew-buddy-data-pvc
+  name: local-registry-pvc
 spec:
   accessModes:
     - ReadWriteOnce # This is standard for a single DB file
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
   storageClassName: local-disk
   selector:
     matchLabels:
-      type: "disk-partition-0101"
-
+      type: "disk-partition-7010"

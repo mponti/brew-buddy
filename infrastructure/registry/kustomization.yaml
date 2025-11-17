@@ -4,5 +4,7 @@ kind: Kustomization
 resources:
 - deployment.yaml
 - service.yaml
+- persistent-volume.yaml
+- persistent-volume-claim.yaml
 
 namespace: default
