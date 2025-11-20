@@ -1,0 +1,173 @@
+---
+# system volume - stop it from hogging the whole disk (250GB Total)
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 2GB
+  maxSize: 120GB
+  grow: false
+---
+# naming convention: [local|external] - [disk|other] - [00][00]
+#                    <location>-<type>-<number><size>
+# disk numbering:
+#     0-4GB  - 1-49
+#     5-9GB  - 50-69
+#     10-19GB - 70-89
+#     20-49GB - 90-99
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-0101
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 1GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-0201
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 1GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-0301
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 1GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-0401
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 1GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-0501
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 1GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-5005
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 5GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-5105
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 5GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-5205
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 5GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-5305
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 5GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-7010
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 10GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-7110
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 10GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-7210
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 10GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-7310
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 10GB
+  grow: false
+---
+# user-volume.patch.yaml
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-disk-7410
+provisioning:
+  diskSelector:
+    match: disk.transport == 'nvme'
+  minSize: 1GB
+  maxSize: 10GB
+  grow: false
+

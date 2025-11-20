@@ -8,3 +8,8 @@ local-data/**
 config.yaml
 
 **/.env.secrets
+**/secrets.yaml
+**/controlplane.yaml
+**/worker.yaml
+**/talosconfig
+
