@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: prometheus
+  template:
+    metadata:
+      labels:
+        deployment: prometheus
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        seccompProfile:
+          type: "RuntimeDefault"
+      #  
+      # Used to chown the persistent volume, comment out the runAs lines above as well
+      # Needed because fsGroup does not work properly on Talos with local-volume
+      #  
+      #initContainers:
+      #- name: volume-permission-fix
+      #  image: alpine:latest
+      #  command: ["sh", "-c", "chown 65534:65534 /data"]
+      #  volumeMounts:
+      #  - name: prometheus-data
+      #    mountPath: /data
+      containers:
+      - name: prometheus
+        image: prom/prometheus
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: prometheus-data
+          mountPath: /prometheus
+        - name: prometheus-config
+          mountPath: /etc/prometheus/prometheus.yml
+          subPath: prometheus.yml
+          readOnly: true
+        securityContext:
+          runAsUser: 65534
+          runAsGroup: 65534
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+      serviceAccountName: monitor
+      volumes:
+      - name: prometheus-data
+        persistentVolumeClaim:
+          claimName: prometheus-pvc
+      - name: prometheus-config
+        configMap:
+          name: prometheus-config

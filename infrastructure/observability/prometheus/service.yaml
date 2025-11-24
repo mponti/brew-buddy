@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-svc
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    deployment: prometheus
+  clusterIP: 10.101.0.10
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      nodePort: 30909

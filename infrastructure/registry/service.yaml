@@ -8,6 +8,7 @@ spec:
   type: NodePort
   selector:
     deployment: local-registry
+  clusterIP: 10.101.67.151
   ports:
     - protocol: TCP
       port: 5000
